@@ -131,9 +131,23 @@ function EditorWrapper({ code, language, onChange }) {
                 insertSpaces={true}
                 highlight={code => highlight(code, languages[language])}
                 padding={10}
+                className="container__editor"
+                highlight={code =>
+                    highlight(code, languages[language])
+                      .split('\n')
+                      .map(
+                        (line, index) =>
+                          `<span class="container_editor_line_number">${line}</span>`
+                      )
+                      .join('\n')
+                  }
                 style={{
                     fontFamily: '"Fira code", "Fira Mono", monospace',
                     fontSize: 24,
+                    paddingLeft: 35,
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
                 }} />
         </div>
     )

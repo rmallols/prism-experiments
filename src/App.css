@@ -2,8 +2,33 @@
     position: relative;
     background-color: black;
     color: white;
+    padding: 15px;
 }
 
 textarea {
-    caret-color: white;
+    caret-color: white; 
+    padding: 0 !important;
+    padding-left: 35px !important;
+    outline: none;
 }
+
+pre {
+    padding: 0 !important;
+}
+
+.container__editor {
+    counter-reset: line;
+}
+  
+  .container_editor_line_number:before {
+    position: absolute;
+    left: -35px;
+    text-align: right;
+    opacity: .3;
+    user-select: none;
+    counter-increment: line;
+    content: counter(line);
+    display: block;
+    width: 35px;
+    padding-right: 5px;
+  }

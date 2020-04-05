@@ -30,5 +30,5 @@ pre {
     content: counter(line);
     display: block;
     width: 35px;
-    padding-right: 5px;
+    margin-left: -10px;
   }

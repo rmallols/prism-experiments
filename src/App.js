@@ -1,35 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-markup';
-// import 'prismjs/components/prism-js-extras';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-css';
 import './App.css';
-// import './prism-okaidia.css';
 import './prism-funky.css';
 
 export default function App() {
+
     const [jsCode, setJsCode] = useState(
-        `
-function add(a, b) {
+        `function add(a, b) {
     return a + b;
-}
-`)
-const [reactCode, setReactCode] = useState(
-    `
+}`)
+    const [reactCode, setReactCode] = useState(
+        `
 function add(a, b) {
     return <div>Hello world</div>
 }
 `)
-const [vueCode, setVueCode] = useState(
-    `
-<template>
+    const [vueCode, setVueCode] = useState(
+`<template>
     <div>
         <label>{{ count }}</label>
         <button @click="increment">Increment</button>
@@ -50,10 +46,10 @@ const [vueCode, setVueCode] = useState(
             }
         }
   }
-</script>
-`)
-const [typescriptCode, setTypescriptCode] = useState(
-    `
+</script>`);
+
+    const [typescriptCode, setTypescriptCode] = useState(
+        `
 function add(a: string, b: string): boolean {
     return a + b;
 }
@@ -67,8 +63,8 @@ class TestUM(unittest.TestCase):
             datetime.date(1985, 10, 17)
         )
 `)
-const [javaCode, setJavaCode] = useState(
-    `
+    const [javaCode, setJavaCode] = useState(
+        `
 // Awaiting for evaluation result...
     import java.util.HashMap;
     import org.junit.Test;
@@ -93,13 +89,13 @@ const [javaCode, setJavaCode] = useState(
     }
 `)
 
-const [markupCode, setMarkupCode] = useState(`
+    const [markupCode, setMarkupCode] = useState(`
 <div>
     <label>Hello world</label>
     </div>
 `)
 
-const [cssCode, setCSSCode] = useState(`
+    const [cssCode, setCSSCode] = useState(`
 .test {
     background-color: yellow;
     padding: 10px;
@@ -107,7 +103,7 @@ const [cssCode, setCSSCode] = useState(`
 
     return (
         <>
-            <EditorWrapper language='js' code={jsCode} onChange={setJsCode} />
+            <EditorWrapper language='js' code={jsCode} onChange={setJsCode} disabled={true} />
             <EditorWrapper language='jsx' code={reactCode} onChange={setReactCode} />
             <EditorWrapper language='jsx' code={vueCode} onChange={setVueCode} />
             <EditorWrapper language='typescript' code={typescriptCode} onChange={setTypescriptCode} />
@@ -120,7 +116,15 @@ const [cssCode, setCSSCode] = useState(`
 }
 
 
-function EditorWrapper({ code, language, onChange }) {
+function EditorWrapper({ code, language, disabled = '', onChange }) {
+
+
+    const fontSize = 16;
+    const editorGutter = Math.round(1.5 * fontSize);
+    useEffect(() => {
+        document.documentElement.style.setProperty('--editor-gutter', `${editorGutter}px`);
+    }, []);
+
     return (
         <div className="EditorWrapper">
             <h1>{language}</h1>
@@ -131,20 +135,20 @@ function EditorWrapper({ code, language, onChange }) {
                 insertSpaces={true}
                 highlight={code => highlight(code, languages[language])}
                 padding={10}
-                className="container__editor"
+                className={`Editor ${disabled && 'is-disabled'}`}
                 highlight={code =>
                     highlight(code, languages[language])
-                      .split('\n')
-                      .map(
-                        (line, index) =>
-                          `<span class="container_editor_line_number">${line}</span>`
-                      )
-                      .join('\n')
-                  }
+                        .split('\n')
+                        .map(
+                            (line, index) =>
+                                `<span class="Editor_line_number">${line}</span>`
+                        )
+                        .join('\n')
+                }
                 style={{
                     fontFamily: '"Fira code", "Fira Mono", monospace',
-                    fontSize: 24,
-                    paddingLeft: 35,
+                    fontSize,
+                    paddingLeft: editorGutter,
                     paddingTop: 0,
                     paddingRight: 0,
                     paddingBottom: 0,

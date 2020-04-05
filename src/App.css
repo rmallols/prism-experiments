@@ -1,14 +1,15 @@
 .EditorWrapper {
-    position: relative;
     background-color: black;
     color: white;
     padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 textarea {
     caret-color: white; 
     padding: 0 !important;
-    padding-left: 35px !important;
+    padding: 1px 0 0 var(--editor-gutter) !important;
     outline: none;
 }
 
@@ -16,19 +17,26 @@ pre {
     padding: 0 !important;
 }
 
-.container__editor {
+.Editor {
     counter-reset: line;
 }
+
+.Editor.is-disabled textarea {
+    pointer-events: none;
+}
   
-  .container_editor_line_number:before {
+.Editor_line_number:before {
     position: absolute;
-    left: -35px;
+
+    /* left: -var(--editor-gutter); */
+    right: 100%;
+
     text-align: right;
     opacity: .3;
     user-select: none;
     counter-increment: line;
     content: counter(line);
     display: block;
-    width: 35px;
+    width: var(--editor-gutter);
     margin-left: -10px;
-  }
+}
